@@ -1,0 +1,29 @@
+pluginManagement {
+    repositories {
+        google()
+        mavenCentral()
+        gradlePluginPortal()
+    }
+}
+
+//def githubProperties = new Properties()
+//file("github.properties").withInputStream { githubProperties.load(it) }
+
+dependencyResolutionManagement {
+    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+    repositories {
+//        maven {
+//            name = "GitHubPackages"
+//            url = uri("https://maven.pkg.github.com/codeckle/compose-code-editor")
+//            credentials {
+//                username = (githubProperties["gpr.usr"] ?: System.getenv("GPR_USER")).toString()
+//                password = (githubProperties["gpr.key"] ?: System.getenv("GPR_API_KEY")).toString()
+//            }
+//        }
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.name = "RevNote-MYS"
+include ':app'

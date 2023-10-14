@@ -1,0 +1,111 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.serialization' version '1.8.10'
+}
+
+android {
+    namespace 'com.revnote.hoyolab'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.revnote.hoyolab"
+        minSdk 30
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.4.3'
+    }
+    packagingOptions {
+        pickFirst "kotlin/kotlin.kotlin_builtins"
+        pickFirst "kotlin/ranges/ranges.kotlin_builtins"
+        pickFirst "kotlin/reflect/reflect.kotlin_builtins"
+        pickFirst "kotlin/collections/collections.kotlin_builtins"
+        pickFirst "kotlin/annotation/annotation.kotlin_builtins"
+        pickFirst "kotlin/coroutines/coroutines.kotlin_builtins"
+        pickFirst "kotlin/internal/internal.kotlin_builtins"
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+ext {
+    compose_version = "1.3.3"
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
+    implementation 'androidx.activity:activity-compose:1.3.1'
+
+    implementation "androidx.compose.ui:ui:$compose_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
+    implementation 'androidx.compose.material3:material3:1.1.0-alpha06'
+    implementation 'androidx.compose.material:material-icons-extended:1.3.1'
+    implementation "androidx.navigation:navigation-compose:2.5.3"
+
+    implementation 'androidx.datastore:datastore-preferences:1.1.0-alpha01'
+
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1"
+
+    implementation "com.squareup.okhttp3:okhttp:4.9.0"
+
+    implementation "io.coil-kt:coil:2.4.0"
+    implementation "io.coil-kt:coil-compose:2.4.0"
+
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    //动态运行kts脚本
+    // runtimeOnly "org.jetbrains.kotlin:kotlin-main-kts:$kotlin_version"
+    implementation "io.apisense:rhino-android:1.2.0"
+    // implementation "org.mozilla:rhino:1.7.14"
+    implementation "org.jetbrains.kotlin:kotlin-script-runtime:$kotlin_version"
+    implementation ("org.jetbrains.kotlin:kotlin-script-util:$kotlin_version") {
+        exclude group: 'org.jetbrains.kotlin', module: 'kotlin-daemon-client'
+    }
+    implementation "org.jetbrains.kotlin:kotlin-scripting-jvm-host:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-compiler-embeddable:$kotlin_version"
+    // implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-scripting-jsr223:$kotlin_version"
+
+    //代码编辑器
+    // implementation "com.wakaztahir.codeeditor:codeeditor:3.1.3" // 弃用，无法安装
+    implementation ("io.github.amrdeveloper:codeview:1.3.8")
+
+    //TextMate Language支持
+//    implementation "org.codroid:codroid-textmate:1.0.2"
+//    implementation "org.codroid:oniguruma-lib:1.0.2"
+}

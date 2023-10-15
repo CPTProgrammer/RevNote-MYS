@@ -8,10 +8,13 @@ import androidx.datastore.preferences.core.edit
 import kotlinx.serialization.Serializable
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.CompletableDeferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
@@ -143,13 +146,26 @@ class TrackingData(private val context: Context) {
     fun getData(key: String): Flow<String> {
         return getData(stringPreferencesKey(key))
     }
-    suspend fun getDataSync(key: Preferences.Key<String>): String = suspendCoroutine { continuation ->
+    suspend fun getDataAsync(key: Preferences.Key<String>): String = suspendCoroutine { continuation ->
         runBlocking {
             val data = context.dataStore.data.first()
             continuation.resume(data[key] ?: "")
         }
     }
-    suspend fun getDataSync(key: String): String {
+    suspend fun getDataAsync(key: String): String {
+        return getDataAsync(stringPreferencesKey(key))
+    }
+
+    fun getDataSync(key: Preferences.Key<String>): String {
+        return runBlocking {
+            val deferred = CompletableDeferred<String>()
+            launch(Dispatchers.IO) {
+                deferred.complete(getDataAsync(key))
+            }
+            deferred.await()
+        }
+    }
+    fun getDataSync(key: String): String {
         return getDataSync(stringPreferencesKey(key))
     }
 

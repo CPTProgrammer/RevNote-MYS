@@ -53,7 +53,7 @@ class TrackingNetwork {
         suspend fun getFp(deviceId: String, context: Context): FPData = suspendCoroutine{continuation ->
             runBlocking {
                 val tracking = TrackingData(context)
-                val fpData = tracking.getDataSync("device_fp_data")
+                val fpData = tracking.getDataAsync("device_fp_data")
                 if (fpData != "") {
                     continuation.resume(Json.decodeFromString<FPData>(fpData))
                     return@runBlocking

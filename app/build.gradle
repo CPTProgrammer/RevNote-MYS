@@ -89,9 +89,10 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
     implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
 
-    //动态运行kts脚本
+    // --动态运行kts脚本-- 并不能运行
     // runtimeOnly "org.jetbrains.kotlin:kotlin-main-kts:$kotlin_version"
-    implementation "io.apisense:rhino-android:1.2.0"
+    // implementation "io.apisense:rhino-android:1.2.0" // 因使用了 mozilla/rhino 1.7.14 而导致出现 Issue mozilla/rhino#1149，故降级
+    implementation "io.apisense:rhino-android:1.1.1"
     // implementation "org.mozilla:rhino:1.7.14"
 //    implementation "org.jetbrains.kotlin:kotlin-script-runtime:$kotlin_version"
 //    implementation ("org.jetbrains.kotlin:kotlin-script-util:$kotlin_version") {

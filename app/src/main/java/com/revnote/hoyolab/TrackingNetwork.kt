@@ -8,6 +8,7 @@ import android.util.Log
 import androidx.compose.runtime.collectAsState
 import kotlinx.coroutines.*
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.*
 import okhttp3.*
@@ -389,6 +390,7 @@ class TrackingNetwork {
                     .addHeader("x-rpc-page", if (playerData.game_id == 0) "ys_#/ys" else "rpg_#/rpg")
                     .addHeader("x-rpc-sys_version", androidVersion)
                     .addHeader("x-rpc-tool_verison", if (playerData.game_id == 0) "ys" else "rpg") //为什么是verison而不是version，是不是拼错了笑死
+                    .addHeader("x-rpc-tool_version", if (playerData.game_id == 0) "ys" else "rpg") //还是加一个改过的吧，防止后端判断不一致
                     .build()
 
                 try {

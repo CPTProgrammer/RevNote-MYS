@@ -1,6 +1,7 @@
 package com.revnote.hoyolab
 
 import android.content.Context
+import android.util.Log
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.MutablePreferences
 import androidx.datastore.preferences.core.Preferences
@@ -181,6 +182,19 @@ class TrackingData(private val context: Context) {
 
     fun getAllKeys(): Flow<Set<Preferences.Key<*>>> {
         return context.dataStore.data.map { it.asMap().keys }
+    }
+
+    fun isDataExistSync(key: Preferences.Key<String>): Boolean {
+        return runBlocking {
+            val deferred = CompletableDeferred<Boolean>()
+            launch(Dispatchers.IO) {
+                deferred.complete(context.dataStore.data.first()[key] != null)
+            }
+            deferred.await()
+        }
+    }
+    fun isDataExistSync(key: String): Boolean {
+        return isDataExistSync(stringPreferencesKey(key))
     }
 
     companion object {
